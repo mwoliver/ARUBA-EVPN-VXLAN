@@ -1,0 +1,168 @@
+! SS0
+!
+hostname SS0
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.0.0/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SPINE0
+ip addr 10.1.0.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/2
+desc Link to SPINE1
+ip addr 10.1.0.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/3
+desc Link to SPINE2
+ip addr 10.1.0.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/6
+desc Link to SS1 (0)
+ip addr 10.100.0.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/7
+desc Link to SS1 (1)
+ip addr 10.100.0.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+router bgp 65500
+maximum-paths 8
+y
+neighbor SPINE_NODES peer-group
+neighbor SPINE_NODES remote-as 65501
+neighbor SPINE_NODES timers 5 15
+neighbor SPINE_NODES update-source loop 10
+neighbor SS_NODES peer-group
+neighbor SS_NODES remote-as 65500
+neighbor SS_NODES timers 5 15
+neighbor SS_NODES update-source loop 10
+neighbor 10.0.0.1 peer-group SS_NODES
+neighbor 10.0.1.0 peer-group SPINE_NODES
+neighbor 10.0.1.1 peer-group SPINE_NODES
+neighbor 10.0.1.2 peer-group SPINE_NODES
+address-family l2vpn evpn
+neighbor SPINE_NODES next-hop-unchanged
+neighbor SPINE_NODES send-community both
+neighbor SS_NODES next-hop-unchanged
+neighbor SS_NODES send-community both
+neighbor 10.0.0.1 activate
+neighbor 10.0.1.0 activate
+neighbor 10.0.1.1 activate
+neighbor 10.0.1.2 activate
+exit-address-family
+!
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SS1
+!
+hostname SS1
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.0.1/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SPINE0
+ip addr 10.1.0.13/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/2
+desc Link to SPINE1
+ip addr 10.1.0.17/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/3
+desc Link to SPINE2
+ip addr 10.1.0.21/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/6
+desc Link to SS0 (0)
+ip addr 10.100.0.2/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/7
+desc Link to SS0 (1)
+ip addr 10.100.0.6/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+router bgp 65500
+maximum-paths 8
+y
+neighbor SPINE_NODES peer-group
+neighbor SPINE_NODES remote-as 65502
+neighbor SPINE_NODES timers 5 15
+neighbor SPINE_NODES update-source loop 10
+neighbor SS_NODES peer-group
+neighbor SS_NODES remote-as 65500
+neighbor SS_NODES timers 5 15
+neighbor SS_NODES update-source loop 10
+neighbor 10.0.0.0 peer-group SS_NODES
+neighbor 10.0.1.3 peer-group SPINE_NODES
+neighbor 10.0.1.4 peer-group SPINE_NODES
+neighbor 10.0.1.5 peer-group SPINE_NODES
+address-family l2vpn evpn
+neighbor SPINE_NODES next-hop-unchanged
+neighbor SPINE_NODES send-community both
+neighbor SS_NODES next-hop-unchanged
+neighbor SS_NODES send-community both
+neighbor 10.0.0.0 activate
+neighbor 10.0.1.3 activate
+neighbor 10.0.1.4 activate
+neighbor 10.0.1.5 activate
+exit-address-family
+!
+!
+end
+wr m

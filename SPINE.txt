@@ -1,0 +1,392 @@
+! SPINE0
+!
+hostname SPINE0
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.1.0/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SS0
+ip addr 10.1.0.2/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/3
+desc Link to LEAF0
+ip addr 10.2.0.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/4
+desc Link to LEAF1
+ip addr 10.2.0.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/5
+desc Link to LEAF2
+ip addr 10.2.0.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE1
+!
+hostname SPINE1
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.1.1/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SS0
+ip addr 10.1.0.6/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/3
+desc Link to LEAF0
+ip addr 10.2.1.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/4
+desc Link to LEAF1
+ip addr 10.2.1.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/5
+desc Link to LEAF2
+ip addr 10.2.1.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE2
+!
+hostname SPINE2
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.1.2/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SS0
+ip addr 10.1.0.10/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/3
+desc Link to LEAF0
+ip addr 10.2.2.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/4
+desc Link to LEAF1
+ip addr 10.2.2.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/5
+desc Link to LEAF2
+ip addr 10.2.2.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE3
+!
+hostname SPINE3
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.1.3/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SS1
+ip addr 10.1.0.14/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/3
+desc Link to LEAF3
+ip addr 10.2.3.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/4
+desc Link to LEAF4
+ip addr 10.2.3.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/5
+desc Link to LEAF5
+ip addr 10.2.3.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE4
+!
+hostname SPINE4
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.1.4/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SS1
+ip addr 10.1.0.18/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/3
+desc Link to LEAF3
+ip addr 10.2.4.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/4
+desc Link to LEAF4
+ip addr 10.2.4.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/5
+desc Link to LEAF5
+ip addr 10.2.4.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE5
+!
+hostname SPINE5
+logging console
+user admin password plain admin
+!
+int loop 10
+ip addr 10.0.1.5/32
+ip ospf 8 area 0
+y
+y
+!
+int 1/1/1
+desc Link to SS1
+ip addr 10.1.0.22/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+!
+int 1/1/3
+desc Link to LEAF3
+ip addr 10.2.5.1/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/4
+desc Link to LEAF4
+ip addr 10.2.5.5/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+int 1/1/5
+desc Link to LEAF5
+ip addr 10.2.5.9/30
+ip ospf 8 area 0
+mtu 9198
+no shut
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE0-2
+!
+router bgp 65501
+maximum-paths 8
+y
+neighbor LEAF_NODES peer-group
+neighbor LEAF_NODES remote-as 65501
+neighbor LEAF_NODES timers 5 15
+neighbor LEAF_NODES update-source loop 10
+neighbor SS_NODES peer-group
+neighbor SS_NODES remote-as 65500
+neighbor SS_NODES timers 5 15
+neighbor SS_NODES update-source loop 10
+neighbor 10.0.0.0 peer-group SS_NODES
+neighbor 10.0.2.0 peer-group LEAF_NODES
+neighbor 10.0.2.1 peer-group LEAF_NODES
+neighbor 10.0.2.2 peer-group LEAF_NODES
+address-family l2vpn evpn
+neighbor LEAF_NODES next-hop-unchanged
+neighbor LEAF_NODES route-reflector-client
+neighbor LEAF_NODES send-community both
+neighbor SS_NODES next-hop-unchanged
+neighbor SS_NODES route-reflector-client
+neighbor SS_NODES send-community both
+neighbor 10.0.0.0 activate
+neighbor 10.0.2.0 activate
+neighbor 10.0.2.1 activate
+neighbor 10.0.2.2 activate
+exit-address-family
+!
+end
+wr m
+
+
+
+
+
+
+
+
+
+
+! SPINE3-5
+!
+router bgp 65502
+maximum-paths 8
+y
+neighbor LEAF_NODES peer-group
+neighbor LEAF_NODES remote-as 65502
+neighbor LEAF_NODES timers 5 15
+neighbor LEAF_NODES update-source loop 10
+neighbor SS_NODES peer-group
+neighbor SS_NODES remote-as 65500
+neighbor SS_NODES timers 5 15
+neighbor SS_NODES update-source loop 10
+neighbor 10.0.0.1 peer-group SS_NODES
+neighbor 10.0.2.3 peer-group LEAF_NODES
+neighbor 10.0.2.4 peer-group LEAF_NODES
+neighbor 10.0.2.5 peer-group LEAF_NODES
+address-family l2vpn evpn
+neighbor LEAF_NODES next-hop-unchanged
+neighbor LEAF_NODES route-reflector-client
+neighbor LEAF_NODES send-community both
+neighbor SS_NODES next-hop-unchanged
+neighbor SS_NODES route-reflector-client
+neighbor SS_NODES send-community both
+neighbor 10.0.0.1 activate
+neighbor 10.0.2.3 activate
+neighbor 10.0.2.4 activate
+neighbor 10.0.2.5 activate
+exit-address-family
+!
+end
+wr m
