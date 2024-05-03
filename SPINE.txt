@@ -338,7 +338,6 @@ neighbor LEAF_NODES next-hop-unchanged
 neighbor LEAF_NODES route-reflector-client
 neighbor LEAF_NODES send-community both
 neighbor SS_NODES next-hop-unchanged
-neighbor SS_NODES route-reflector-client
 neighbor SS_NODES send-community both
 neighbor 10.0.0.0 activate
 neighbor 10.0.2.0 activate
@@ -380,7 +379,6 @@ neighbor LEAF_NODES next-hop-unchanged
 neighbor LEAF_NODES route-reflector-client
 neighbor LEAF_NODES send-community both
 neighbor SS_NODES next-hop-unchanged
-neighbor SS_NODES route-reflector-client
 neighbor SS_NODES send-community both
 neighbor 10.0.0.1 activate
 neighbor 10.0.2.3 activate
